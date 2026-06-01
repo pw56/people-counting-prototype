@@ -22,6 +22,7 @@ html, body {
     font-size: 8rem; /* 文字の大きさ（好みに合わせて変更してください） */
     font-weight: bold;
     color: #333333;
+    white-space: pre-wrap;
 }
 
 /* カメラ映像は裏側で使うため非表示にする */
