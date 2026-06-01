@@ -1,6 +1,7 @@
 const video = document.getElementById('webcam');
 const countText = document.getElementById('count-text');
 let model;
+const waitTimeFactor = 3; // 待ち時間の係数
 
 // 1. Webカメラの起動
 async function setupCamera() {
@@ -32,7 +33,7 @@ async function detectFaces() {
     const peopleCount = people.length;
     
     // 画面のテキストを更新
-    countText.innerText = `人数: ${peopleCount}人`;
+    countText.innerText = `人数: ${peopleCount}人\n待ち時間: ${peopleCount * waitTimeFactor}`;
 
     // 次のフレームでも実行
     requestAnimationFrame(detectFaces);
