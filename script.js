@@ -1,47 +1,57 @@
-const canvas = document.getElementById('out');
-const ctx = canvas.getContext('2d');
-const video = document.createElement('video');
-video.autoplay = true;
-video.playsInline = true;
+const video = document.getElementById('webcam');
+const countText = document.getElementById('count-text');
+let model;
 
-let model = null;
-let stream = null;
-
-async function init() {
-  model = await cocoSsd.load();
-  stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
-  video.srcObject = stream;
-
-  video.addEventListener('loadeddata', () => {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    loop();
-  });
-}
-
-async function loop() {
-  // 人数初期化
-  let numberOfPeople = 0;
-
-  // ビデオを一旦描画
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-  // 人物検出
-  const predictions = await model.detect(video);
-
-  // 背景を塗りつぶし
-  ctx.fillStyle = '#00FF00';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // 検出されたすべての人物を残す
-  for (const p of predictions) {
-    if (p.class === 'person' && p.score > 0.5) {
-      const [x, y, w, h] = p.bbox;
-      ctx.drawImage(video, x, y, w, h, x, y, w, h);
+// 1. Webカメラの起動
+async function setupCamera() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { width: 640, height: 480 },
+            audio: false
+        });
+        video.srcObject = stream;
+        return new Promise((resolve) => {
+            video.onloadedmetadata = () => {
+                resolve(video);
+            };
+        });
+    } catch (error) {
+        console.error("カメラのアクセスに失敗しました:", error);
+        countText.innerText = "カメラエラー";
     }
-  }
-
-  requestAnimationFrame(loop);
 }
 
-init();
+// 2. 人数検出のループ処理
+async function detectFaces() {
+    // 映像から顔を検出（予測）
+    const predictions = await model.estimateFaces(video, false);
+    
+    // 検出された配列の長さが「写っている人数」
+    const peopleCount = predictions.length;
+    
+    // 画面のテキストを更新
+    countText.innerText = `人数: ${peopleCount}人`;
+
+    // 次のフレームでも実行
+    requestAnimationFrame(detectFaces);
+}
+
+// 3. メイン初期化処理
+async function main() {
+    countText.innerText = "モデル読み込み中...";
+    
+    // BlazeFaceモデルのロード
+    model = await blazeface.load();
+    
+    // カメラの準備
+    await setupCamera();
+    
+    // 映像の再生開始
+    video.play();
+    
+    // ループ処理の開始
+    detectFaces();
+}
+
+// ページ読み込み時に実行
+main();

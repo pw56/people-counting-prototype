@@ -1,26 +1,30 @@
-html,
-body {
+/* 全体のリセットと中央配置の設定 */
+html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
     height: 100%;
-    background: #111;
+    background-color: transparent; /* 背景を無色に設定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    overflow: hidden;
 }
 
-canvas {
-    display: block;
-    margin: auto;
-    height: 100%;
-    transform: scaleX(-1);
+/* テキストコンテナ */
+#counter-container {
+    text-align: center;
 }
 
-#count {
-    background-color: blue;
-    color: white;
+/* かなり大きめのテキストスタイル */
+#count-text {
+    font-size: 8rem; /* 文字の大きさ（好みに合わせて変更してください） */
+    font-weight: bold;
+    color: #333333;
+}
 
-    height: 50vh;
-    width: 50vh;
-    font-size: 50%;
-
-    position: fixed;
-    top: 0px;
-    left: 0px;
+/* カメラ映像は裏側で使うため非表示にする */
+#webcam {
+    display: none;
 }
