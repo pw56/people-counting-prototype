@@ -24,10 +24,12 @@ async function setupCamera() {
 // 2. 人数検出のループ処理
 async function detectFaces() {
     // 映像から顔を検出（予測）
-    const predictions = await model.estimateFaces(video, false);
+    const predictions = await model.detect(video);
+
+    const people = predictions.filter(prediction => prediction.class === 'person');
     
     // 検出された配列の長さが「写っている人数」
-    const peopleCount = predictions.length;
+    const peopleCount = people.length;
     
     // 画面のテキストを更新
     countText.innerText = `人数: ${peopleCount}人`;
@@ -40,8 +42,8 @@ async function detectFaces() {
 async function main() {
     countText.innerText = "モデル読み込み中...";
     
-    // BlazeFaceモデルのロード
-    model = await blazeface.load();
+    // COCO-SSDモデルのロード
+    model = await cocoSsd.load();
     
     // カメラの準備
     await setupCamera();
