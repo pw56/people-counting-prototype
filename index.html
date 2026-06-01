@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>複数人物検出（COCO-SSD）</title>
+  <title>人数カウント（COCO-SSD）</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <canvas id="out"></canvas>
+  <div id="count">人数: 0人</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.13.0/dist/tf.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>

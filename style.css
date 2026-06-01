@@ -11,3 +11,16 @@ canvas {
     height: 100%;
     transform: scaleX(-1);
 }
+
+#count {
+    background-color: blue;
+    color: white;
+
+    height: 50%;
+    width: 50%;
+    font-size: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
