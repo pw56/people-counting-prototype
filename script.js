@@ -20,6 +20,9 @@ async function init() {
 }
 
 async function loop() {
+  // 人数初期化
+  let numberOfPeople = 0;
+
   // ビデオを一旦描画
   ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
