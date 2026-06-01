@@ -33,7 +33,9 @@ async function detectFaces() {
     const peopleCount = people.length;
     
     // 画面のテキストを更新
-    countText.innerText = `人数: ${peopleCount}人\n待ち時間: ${peopleCount * waitTimeFactor}`;
+    countText.innerText =
+    `人数: ${peopleCount}人
+    待ち時間: ${peopleCount * waitTimeFactor}`;
 
     // 次のフレームでも実行
     requestAnimationFrame(detectFaces);
