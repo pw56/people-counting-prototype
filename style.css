@@ -23,6 +23,7 @@ html, body {
     font-weight: bold;
     color: #333333;
     white-space: pre-wrap;
+    text-align: center;
 }
 
 /* カメラ映像は裏側で使うため非表示にする */
